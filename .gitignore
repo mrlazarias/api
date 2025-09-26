@@ -1,0 +1,85 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+/storage/logs/*.log
+/storage/logs/**/*.log
+*.log
+
+# Cache
+/storage/cache/*
+!/storage/cache/.gitkeep
+
+# Uploads
+/storage/uploads/*
+!/storage/uploads/.gitkeep
+
+# Temporary files
+/tmp/
+/temp/
+
+# Build files
+/build/
+/dist/
+
+# Testing
+/coverage/
+.phpunit.result.cache
+.pest
+
+# Composer
+composer.phar
+composer.lock
+
+# PHP Storm
+.phpstorm.meta.php
+_ide_helper.php
+_ide_helper_models.php
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Docker volumes
+/docker/volumes/
+
+# Database
+*.sqlite
+*.db
+
+# Documentation build
+/docs/build/
+
+# PHPStan
+/phpstan.neon
+
+# PHP CS Fixer
+.php-cs-fixer.cache
+.php_cs.cache
+
+# Pest
+.pest
+

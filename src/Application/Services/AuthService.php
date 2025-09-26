@@ -9,6 +9,7 @@ use App\Domain\Exceptions\DomainException;
 use App\Domain\Repositories\UserRepositoryInterface;
 use App\Domain\ValueObjects\Email;
 use App\Infrastructure\Cache\CacheManager;
+use App\Infrastructure\Cache\FileCacheManager;
 use App\Infrastructure\Security\JwtManager;
 
 final class AuthService
@@ -16,7 +17,7 @@ final class AuthService
     public function __construct(
         private readonly UserRepositoryInterface $userRepository,
         private readonly JwtManager $jwtManager,
-        private readonly CacheManager $cache
+        private readonly CacheManager|FileCacheManager $cache
     ) {}
 
     public function register(string $name, string $email, string $password): User

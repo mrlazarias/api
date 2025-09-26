@@ -105,7 +105,7 @@ final class Application
         });
 
         // Catch all route for API 404
-        $this->app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/api/{routes:.+}', 
+        $this->app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/api/{routes:.+}',
             function (Request $request, Response $response) {
                 $data = [
                     'error' => 'Not Found',

@@ -102,7 +102,7 @@ final class FileCacheManager
     public function flush(): bool
     {
         $files = glob($this->cacheDir . '/*');
-        
+
         if ($files !== false) {
             foreach ($files as $file) {
                 if (is_file($file)) {
@@ -110,7 +110,7 @@ final class FileCacheManager
                 }
             }
         }
-        
+
         return true;
     }
 

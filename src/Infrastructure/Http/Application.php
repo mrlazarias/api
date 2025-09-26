@@ -45,6 +45,11 @@ final class Application
         $this->app->run();
     }
 
+    public function getApp(): App
+    {
+        return $this->app;
+    }
+
     private function configureMiddleware(): void
     {
         // Error handler middleware (should be first)
@@ -89,14 +94,14 @@ final class Application
                 $authGroup->post('/reset-password', '\App\Presentation\Controllers\AuthController:resetPassword');
             });
 
-            // User routes
+            // User routes (protected)
             $group->group('/users', function ($userGroup) {
                 $userGroup->get('', '\App\Presentation\Controllers\UserController:index');
                 $userGroup->get('/{id}', '\App\Presentation\Controllers\UserController:show');
                 $userGroup->put('/{id}', '\App\Presentation\Controllers\UserController:update');
                 $userGroup->delete('/{id}', '\App\Presentation\Controllers\UserController:delete');
                 $userGroup->get('/{id}/profile', '\App\Presentation\Controllers\UserController:profile');
-            });
+            })->add('\App\Presentation\Middleware\AuthMiddleware');
 
             // Protected routes example
             $group->group('/protected', function ($protectedGroup) {

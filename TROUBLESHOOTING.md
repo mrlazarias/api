@@ -244,3 +244,271 @@ make clean-all
 - [PHP-FPM Configuration](https://www.php.net/manual/en/install.fpm.configuration.php)
 - [Nginx Configuration](https://nginx.org/en/docs/)
 - [Redis Documentation](https://redis.io/documentation)
+
+## 📮 Testando a API com Postman
+
+### 1. 🚀 **Setup Inicial**
+
+1. **Inicie a API:**
+   ```bash
+   make up
+   # Aguarde alguns segundos para os containers iniciarem
+   ```
+
+2. **Verifique se está rodando:**
+   ```bash
+   make api-test
+   # ou
+   curl http://localhost:8000/health
+   ```
+
+### 2. 📋 **Collection do Postman**
+
+**Base URL:** `http://localhost:8000`
+
+#### 🏥 **Health Check**
+```
+GET http://localhost:8000/health
+```
+**Response esperado:**
+```json
+{
+  "status": "ok",
+  "timestamp": "2023-12-01T10:00:00Z",
+  "version": "1.0.0",
+  "environment": "development"
+}
+```
+
+#### 👤 **1. Registrar Usuário**
+```
+POST http://localhost:8000/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "name": "João Silva",
+  "email": "joao@example.com",
+  "password": "minhasenha123"
+}
+```
+
+**Response esperado (201):**
+```json
+{
+  "message": "User registered successfully",
+  "user": {
+    "id": "uuid-aqui",
+    "name": "João Silva",
+    "email": "joao@example.com",
+    "is_active": true,
+    "is_verified": false,
+    "roles": ["user"]
+  }
+}
+```
+
+#### 🔐 **2. Login**
+```
+POST http://localhost:8000/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "joao@example.com",
+  "password": "minhasenha123"
+}
+```
+
+**Response esperado (200):**
+```json
+{
+  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+  "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "user": {
+    "id": "uuid-aqui",
+    "name": "João Silva",
+    "email": "joao@example.com"
+  }
+}
+```
+
+**⚠️ IMPORTANTE:** Copie o `access_token` para usar nas próximas requisições!
+
+#### 👥 **3. Listar Usuários (Requer Token)**
+```
+GET http://localhost:8000/api/v1/users
+Authorization: Bearer SEU_ACCESS_TOKEN_AQUI
+```
+
+**Response esperado (200):**
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "name": "João Silva",
+      "email": "joao@example.com",
+      "is_active": true
+    }
+  ],
+  "meta": {
+    "total": 1,
+    "limit": 50,
+    "offset": 0,
+    "has_more": false
+  }
+}
+```
+
+#### 👤 **4. Ver Perfil (Rota Protegida)**
+```
+GET http://localhost:8000/api/v1/protected/profile
+Authorization: Bearer SEU_ACCESS_TOKEN_AQUI
+```
+
+#### 🔄 **5. Renovar Token**
+```
+POST http://localhost:8000/api/v1/auth/refresh
+Content-Type: application/json
+
+{
+  "refresh_token": "SEU_REFRESH_TOKEN_AQUI"
+}
+```
+
+#### 🚪 **6. Logout**
+```
+POST http://localhost:8000/api/v1/auth/logout
+Authorization: Bearer SEU_ACCESS_TOKEN_AQUI
+```
+
+### 3. 🎯 **Configuração no Postman**
+
+#### **Variáveis de Ambiente:**
+1. Crie um Environment no Postman
+2. Adicione as variáveis:
+   ```
+   base_url: http://localhost:8000
+   access_token: (será preenchido automaticamente)
+   refresh_token: (será preenchido automaticamente)
+   ```
+
+#### **Scripts Automáticos:**
+
+**No request de Login, aba "Tests":**
+```javascript
+// Salvar tokens automaticamente
+if (pm.response.code === 200) {
+    const response = pm.response.json();
+    pm.environment.set("access_token", response.access_token);
+    pm.environment.set("refresh_token", response.refresh_token);
+    console.log("Tokens salvos!");
+}
+```
+
+**No request de Refresh, aba "Tests":**
+```javascript
+// Atualizar access token
+if (pm.response.code === 200) {
+    const response = pm.response.json();
+    pm.environment.set("access_token", response.access_token);
+    pm.environment.set("refresh_token", response.refresh_token);
+    console.log("Token renovado!");
+}
+```
+
+### 4. 🧪 **Sequência de Testes**
+
+**Ordem recomendada:**
+1. ✅ Health Check
+2. ✅ Registrar usuário
+3. ✅ Login (salvar token)
+4. ✅ Ver perfil
+5. ✅ Listar usuários
+6. ✅ Renovar token
+7. ✅ Logout
+
+### 5. 🚨 **Testando Errors**
+
+#### **Erro de Validação (422):**
+```
+POST http://localhost:8000/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "name": "",
+  "email": "email-inválido",
+  "password": "123"
+}
+```
+
+#### **Erro de Autenticação (401):**
+```
+GET http://localhost:8000/api/v1/protected/profile
+Authorization: Bearer token-inválido
+```
+
+#### **Rate Limiting (429):**
+Faça mais de 100 requests em 1 hora para o mesmo endpoint.
+
+### 6. 📊 **Headers Importantes**
+
+**Para todas as requests:**
+```
+Content-Type: application/json
+Accept: application/json
+```
+
+**Para rotas protegidas:**
+```
+Authorization: Bearer SEU_TOKEN_AQUI
+```
+
+**Observe os headers de resposta:**
+```
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 99
+X-RateLimit-Reset: 1640995200
+```
+
+### 7. 🔍 **Debug**
+
+Se algo não funcionar:
+
+1. **Verifique se a API está rodando:**
+   ```bash
+   make logs-app
+   ```
+
+2. **Teste com curl primeiro:**
+   ```bash
+   curl -X GET http://localhost:8000/health
+   ```
+
+3. **Verifique o token JWT:**
+   - Use [jwt.io](https://jwt.io) para decodificar
+   - Verifique se não expirou
+
+4. **Headers obrigatórios:**
+   - `Content-Type: application/json`
+   - `Authorization: Bearer token` (para rotas protegidas)
+
+### 8. 📁 **Collection Completa**
+
+Crie uma collection no Postman com esta estrutura:
+```
+📁 Robust PHP API
+├── 🏥 Health Check
+├── 📁 Auth
+│   ├── 👤 Register
+│   ├── 🔐 Login
+│   ├── 🔄 Refresh
+│   └── 🚪 Logout
+├── 📁 Users
+│   ├── 📋 List Users
+│   └── 👁️ Get User
+└── 📁 Protected
+    ├── 👤 Get Profile
+    └── ✏️ Update Profile
+```

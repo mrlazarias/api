@@ -161,6 +161,24 @@ curl -X GET http://localhost:8000/api/v1/protected/profile \
   -H "Authorization: Bearer SEU_TOKEN_AQUI"
 ```
 
+## 📮 Testando com Postman
+
+### **Importação Rápida**
+1. Importe a collection: `docs/postman-collection.json`
+2. Importe o environment: `docs/postman-environment.json`
+3. Selecione o environment "Robust API - Development"
+4. Execute os requests na ordem sugerida
+
+### **Sequência de Teste**
+1. **🏥 Health Check** - Verificar API
+2. **👤 Register User** - Criar conta
+3. **🔐 Login** - Tokens salvos automaticamente
+4. **👤 Get Profile** - Testar autenticação
+5. **📋 List Users** - Listar dados
+6. **🔄 Refresh Token** - Renovar acesso
+
+**📖 Guia completo:** [POSTMAN-SETUP.md](docs/POSTMAN-SETUP.md)
+
 ## 🏗️ Arquitetura
 
 ```

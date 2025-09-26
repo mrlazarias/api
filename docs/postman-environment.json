@@ -1,0 +1,37 @@
+{
+  "id": "robust-api-env",
+  "name": "Robust API - Development",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "description": "Base URL da API",
+      "enabled": true
+    },
+    {
+      "key": "access_token",
+      "value": "",
+      "description": "JWT Access Token (preenchido automaticamente após login)",
+      "enabled": true
+    },
+    {
+      "key": "refresh_token",
+      "value": "",
+      "description": "JWT Refresh Token (preenchido automaticamente após login)",
+      "enabled": true
+    },
+    {
+      "key": "user_id",
+      "value": "",
+      "description": "ID do usuário logado",
+      "enabled": true
+    },
+    {
+      "key": "api_version",
+      "value": "v1",
+      "description": "Versão da API",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}

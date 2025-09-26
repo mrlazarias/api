@@ -14,7 +14,7 @@ final class FileCacheManager
     public function __construct()
     {
         $this->cacheDir = __DIR__ . '/../../../storage/cache';
-        
+
         if (!is_dir($this->cacheDir)) {
             mkdir($this->cacheDir, 0755, true);
         }
@@ -23,27 +23,27 @@ final class FileCacheManager
     public function get(string $key, mixed $default = null): mixed
     {
         $file = $this->getFilePath($key);
-        
+
         if (!file_exists($file)) {
             return $default;
         }
-        
+
         $content = file_get_contents($file);
         if ($content === false) {
             return $default;
         }
-        
+
         $data = json_decode($content, true);
         if (!$data || !isset($data['expires_at'], $data['value'])) {
             return $default;
         }
-        
+
         // Check if expired
         if ($data['expires_at'] !== null && time() > $data['expires_at']) {
             $this->delete($key);
             return $default;
         }
-        
+
         return $data['value'];
     }
 
@@ -51,28 +51,28 @@ final class FileCacheManager
     {
         $file = $this->getFilePath($key);
         $dir = dirname($file);
-        
+
         if (!is_dir($dir)) {
             mkdir($dir, 0755, true);
         }
-        
+
         $data = [
             'value' => $value,
             'expires_at' => $ttl ? time() + $ttl : null,
             'created_at' => time(),
         ];
-        
+
         return file_put_contents($file, json_encode($data)) !== false;
     }
 
     public function delete(string $key): bool
     {
         $file = $this->getFilePath($key);
-        
+
         if (file_exists($file)) {
             return unlink($file);
         }
-        
+
         return true;
     }
 
@@ -86,7 +86,7 @@ final class FileCacheManager
         $current = (int) $this->get($key, 0);
         $new = $current + $value;
         $this->set($key, $new);
-        
+
         return $new;
     }
 
@@ -95,20 +95,20 @@ final class FileCacheManager
         $current = (int) $this->get($key, 0);
         $new = max(0, $current - $value);
         $this->set($key, $new);
-        
+
         return $new;
     }
 
     public function flush(): bool
     {
         $files = glob($this->cacheDir . '/*');
-        
+
         foreach ($files as $file) {
             if (is_file($file)) {
                 unlink($file);
             }
         }
-        
+
         return true;
     }
 
@@ -117,10 +117,10 @@ final class FileCacheManager
         if ($this->exists($key)) {
             return $this->get($key);
         }
-        
+
         $value = $callback();
         $this->set($key, $value, $ttl);
-        
+
         return $value;
     }
 
@@ -128,7 +128,7 @@ final class FileCacheManager
     {
         $hash = md5($key);
         $subDir = substr($hash, 0, 2);
-        
+
         return $this->cacheDir . '/' . $subDir . '/' . $hash . '.cache';
     }
 }

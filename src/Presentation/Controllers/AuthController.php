@@ -24,7 +24,7 @@ final class AuthController
         $userRepository = new InMemoryUserRepository();
         $jwtManager = new JwtManager();
         $cacheManager = CacheFactory::create();
-        
+
         $this->authService = new AuthService($userRepository, $jwtManager, $cacheManager);
     }
 

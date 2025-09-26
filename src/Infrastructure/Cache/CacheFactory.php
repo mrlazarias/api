@@ -18,17 +18,17 @@ final class CacheFactory
                     'password' => $_ENV['REDIS_PASSWORD'] ?? null,
                     'database' => (int) ($_ENV['REDIS_DB'] ?? 0),
                 ]);
-                
+
                 // Test connection
                 $redis->ping();
-                
+
                 return new CacheManager();
             }
         } catch (\Exception $e) {
             // Redis not available, fall back to file cache
             error_log("Redis not available, using file cache: " . $e->getMessage());
         }
-        
+
         return new FileCacheManager();
     }
 }

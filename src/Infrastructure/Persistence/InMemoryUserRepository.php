@@ -70,4 +70,3 @@ final class InMemoryUserRepository implements UserRepositoryInterface
         return count($this->users);
     }
 }
-

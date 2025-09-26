@@ -26,4 +26,3 @@ interface UserRepositoryInterface
 
     public function count(): int;
 }
-

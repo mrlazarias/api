@@ -30,4 +30,3 @@ final class JsonBodyParserMiddleware implements MiddlewareInterface
         return $handler->handle($request);
     }
 }
-

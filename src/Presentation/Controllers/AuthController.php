@@ -8,8 +8,8 @@ use App\Application\Services\AuthService;
 use App\Domain\Exceptions\DomainException;
 use App\Domain\Exceptions\ValidationException;
 use App\Infrastructure\Cache\CacheFactory;
-use App\Infrastructure\Security\JwtManager;
 use App\Infrastructure\Persistence\InMemoryUserRepository;
+use App\Infrastructure\Security\JwtManager;
 use App\Presentation\Traits\JsonResponseTrait;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -18,7 +18,7 @@ use Respect\Validation\Validator as v;
 final class AuthController
 {
     use JsonResponseTrait;
-    
+
     private AuthService $authService;
 
     public function __construct()
@@ -63,10 +63,7 @@ final class AuthController
                 'errors' => $e->getErrors(),
             ];
 
-            $response->getBody()->write(json_encode($error));
-            return $response
-                ->withStatus(422)
-                ->withHeader('Content-Type', 'application/json');
+            return $this->writeJson($response, $error, 422);
         }
     }
 
@@ -83,10 +80,7 @@ final class AuthController
 
             $tokens = $this->authService->login($data['email'], $data['password']);
 
-            $response->getBody()->write(json_encode($tokens));
-            return $response
-                ->withStatus(200)
-                ->withHeader('Content-Type', 'application/json');
+            return $this->writeJson($response, $tokens);
 
         } catch (ValidationException $e) {
             $error = [
@@ -95,20 +89,14 @@ final class AuthController
                 'errors' => $e->getErrors(),
             ];
 
-            $response->getBody()->write(json_encode($error));
-            return $response
-                ->withStatus(422)
-                ->withHeader('Content-Type', 'application/json');
+            return $this->writeJson($response, $error, 422);
         } catch (DomainException $e) {
             $error = [
                 'error' => 'Authentication Error',
                 'message' => $e->getMessage(),
             ];
 
-            $response->getBody()->write(json_encode($error));
-            return $response
-                ->withStatus(401)
-                ->withHeader('Content-Type', 'application/json');
+            return $this->writeJson($response, $error, 401);
         }
     }
 
@@ -123,10 +111,7 @@ final class AuthController
 
             $tokens = $this->authService->refreshToken($data['refresh_token']);
 
-            $response->getBody()->write(json_encode($tokens));
-            return $response
-                ->withStatus(200)
-                ->withHeader('Content-Type', 'application/json');
+            return $this->writeJson($response, $tokens);
 
         } catch (DomainException $e) {
             $error = [
@@ -134,10 +119,7 @@ final class AuthController
                 'message' => $e->getMessage(),
             ];
 
-            $response->getBody()->write(json_encode($error));
-            return $response
-                ->withStatus(401)
-                ->withHeader('Content-Type', 'application/json');
+            return $this->writeJson($response, $error, 401);
         }
     }
 
@@ -148,10 +130,7 @@ final class AuthController
             'message' => 'Logged out successfully',
         ];
 
-        $response->getBody()->write(json_encode($result));
-        return $response
-            ->withStatus(200)
-            ->withHeader('Content-Type', 'application/json');
+        return $this->writeJson($response, $result);
     }
 
     public function forgotPassword(Request $request, Response $response): Response
@@ -163,10 +142,7 @@ final class AuthController
             'message' => 'If the email exists, a password reset link has been sent',
         ];
 
-        $response->getBody()->write(json_encode($result));
-        return $response
-            ->withStatus(200)
-            ->withHeader('Content-Type', 'application/json');
+        return $this->writeJson($response, $result);
     }
 
     public function resetPassword(Request $request, Response $response): Response
@@ -176,10 +152,7 @@ final class AuthController
             'message' => 'Password reset successfully',
         ];
 
-        $response->getBody()->write(json_encode($result));
-        return $response
-            ->withStatus(200)
-            ->withHeader('Content-Type', 'application/json');
+        return $this->writeJson($response, $result);
     }
 
     private function validateRegistrationData(array $data): void
@@ -228,4 +201,3 @@ final class AuthController
         }
     }
 }
-

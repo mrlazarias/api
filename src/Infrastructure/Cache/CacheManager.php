@@ -30,6 +30,7 @@ final class CacheManager
         }
 
         $decoded = json_decode($value, true);
+
         return $decoded === null ? $value : $decoded;
     }
 
@@ -81,4 +82,3 @@ final class CacheManager
         return $value;
     }
 }
-

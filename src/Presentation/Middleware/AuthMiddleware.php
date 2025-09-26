@@ -8,6 +8,7 @@ use App\Application\Services\AuthService;
 use App\Infrastructure\Cache\CacheFactory;
 use App\Infrastructure\Persistence\InMemoryUserRepository;
 use App\Infrastructure\Security\JwtManager;
+use App\Presentation\Traits\JsonResponseTrait;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -16,6 +17,8 @@ use Slim\Psr7\Response;
 
 final class AuthMiddleware implements MiddlewareInterface
 {
+    use JsonResponseTrait;
+
     private AuthService $authService;
 
     public function __construct()
@@ -62,11 +65,6 @@ final class AuthMiddleware implements MiddlewareInterface
             'message' => $message,
         ];
 
-        $response->getBody()->write(json_encode($error));
-
-        return $response
-            ->withStatus(401)
-            ->withHeader('Content-Type', 'application/json');
+        return $this->writeJson($response, $error, 401);
     }
 }
-

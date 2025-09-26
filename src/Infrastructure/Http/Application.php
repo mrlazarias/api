@@ -11,8 +11,8 @@ use App\Infrastructure\Http\Middleware\RateLimitMiddleware;
 use App\Infrastructure\Logging\LoggerFactory;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Factory\AppFactory;
 use Slim\App;
+use Slim\Factory\AppFactory;
 
 final class Application
 {
@@ -31,6 +31,7 @@ final class Application
         if ($json !== false) {
             $response->getBody()->write($json);
         }
+
         return $response->withHeader('Content-Type', 'application/json');
     }
 
@@ -105,7 +106,9 @@ final class Application
         });
 
         // Catch all route for API 404
-        $this->app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/api/{routes:.+}',
+        $this->app->map(
+            ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+            '/api/{routes:.+}',
             function (Request $request, Response $response) {
                 $data = [
                     'error' => 'Not Found',
@@ -118,4 +121,3 @@ final class Application
         );
     }
 }
-

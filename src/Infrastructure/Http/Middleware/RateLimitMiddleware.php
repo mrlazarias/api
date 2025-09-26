@@ -43,7 +43,8 @@ final class RateLimitMiddleware implements MiddlewareInterface
                 'retry_after' => $window,
             ];
 
-            $response->getBody()->write(json_encode($error));
+            $json = json_encode($error, JSON_THROW_ON_ERROR);
+            $response->getBody()->write($json);
 
             return $response
                 ->withStatus(429)

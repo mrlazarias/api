@@ -23,7 +23,7 @@ final class LoggerFactory
 
         // Ensure log directory exists
         if (!is_dir($logPath)) {
-            mkdir($logPath, 0755, true);
+            mkdir($logPath, 0o755, true);
         }
 
         // Add handlers
@@ -50,4 +50,3 @@ final class LoggerFactory
         return $logger;
     }
 }
-

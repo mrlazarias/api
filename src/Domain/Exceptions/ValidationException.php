@@ -19,4 +19,3 @@ class ValidationException extends DomainException
         return $this->errors;
     }
 }
-

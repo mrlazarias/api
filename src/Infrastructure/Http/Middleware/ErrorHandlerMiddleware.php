@@ -18,7 +18,8 @@ final class ErrorHandlerMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private readonly LoggerInterface $logger
-    ) {}
+    ) {
+    }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -77,11 +78,11 @@ final class ErrorHandlerMiddleware implements MiddlewareInterface
             ];
         }
 
-        $response->getBody()->write(json_encode($error, JSON_PRETTY_PRINT));
+        $json = json_encode($error, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR);
+        $response->getBody()->write($json);
 
         return $response
             ->withStatus($statusCode)
             ->withHeader('Content-Type', 'application/json');
     }
 }
-

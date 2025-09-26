@@ -16,7 +16,7 @@ final class FileCacheManager
         $this->cacheDir = __DIR__ . '/../../../storage/cache';
 
         if (!is_dir($this->cacheDir)) {
-            mkdir($this->cacheDir, 0755, true);
+            mkdir($this->cacheDir, 0o755, true);
         }
     }
 
@@ -41,6 +41,7 @@ final class FileCacheManager
         // Check if expired
         if ($data['expires_at'] !== null && time() > $data['expires_at']) {
             $this->delete($key);
+
             return $default;
         }
 
@@ -53,7 +54,7 @@ final class FileCacheManager
         $dir = dirname($file);
 
         if (!is_dir($dir)) {
-            mkdir($dir, 0755, true);
+            mkdir($dir, 0o755, true);
         }
 
         $data = [

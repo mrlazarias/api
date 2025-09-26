@@ -33,4 +33,3 @@ final class CorsMiddleware implements MiddlewareInterface
             ->withHeader('Access-Control-Max-Age', '3600');
     }
 }
-

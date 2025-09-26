@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Infrastructure\Security;
 
 use App\Domain\Exceptions\DomainException;
+use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use Firebase\JWT\ExpiredException;
 use Firebase\JWT\SignatureInvalidException;
 
 final class JwtManager
@@ -58,6 +58,7 @@ final class JwtManager
     {
         try {
             $decoded = JWT::decode($token, new Key($this->secret, $this->algorithm));
+
             return (array) $decoded;
         } catch (ExpiredException $e) {
             throw new DomainException('Token expired', 401);
@@ -92,4 +93,3 @@ final class JwtManager
         return $this->validateToken($token);
     }
 }
-

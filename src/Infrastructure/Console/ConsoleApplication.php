@@ -21,7 +21,7 @@ final class ConsoleApplication extends Application
     private function setupCommands(): void
     {
         // Add custom commands here
-        $this->add(new class('cache:clear') extends Command {
+        $this->add(new class ('cache:clear') extends Command {
             protected function configure(): void
             {
                 $this->setDescription('Clear application cache');
@@ -30,11 +30,12 @@ final class ConsoleApplication extends Application
             protected function execute(InputInterface $input, OutputInterface $output): int
             {
                 $output->writeln('Cache cleared successfully!');
+
                 return Command::SUCCESS;
             }
         });
 
-        $this->add(new class('api:docs') extends Command {
+        $this->add(new class ('api:docs') extends Command {
             protected function configure(): void
             {
                 $this->setDescription('Generate API documentation');
@@ -43,9 +44,9 @@ final class ConsoleApplication extends Application
             protected function execute(InputInterface $input, OutputInterface $output): int
             {
                 $output->writeln('API documentation generated successfully!');
+
                 return Command::SUCCESS;
             }
         });
     }
 }
-

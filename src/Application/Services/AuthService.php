@@ -18,7 +18,8 @@ final class AuthService
         private readonly UserRepositoryInterface $userRepository,
         private readonly JwtManager $jwtManager,
         private readonly CacheManager|FileCacheManager $cache
-    ) {}
+    ) {
+    }
 
     public function register(string $name, string $email, string $password): User
     {
@@ -124,4 +125,3 @@ final class AuthService
         );
     }
 }
-

@@ -46,4 +46,3 @@ final class UserId
         return $this->toString();
     }
 }
-

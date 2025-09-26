@@ -83,10 +83,10 @@ phpstan: ## Run PHPStan analysis
 	podman-compose exec app ./vendor/bin/phpstan analyse
 
 cs-check: ## Check coding standards
-	podman-compose exec app ./vendor/bin/php-cs-fixer fix --dry-run --diff
+	podman-compose exec app ./vendor/bin/php-cs-fixer fix --dry-run --diff --allow-risky=yes
 
 cs-fix: ## Fix coding standards
-	podman-compose exec app ./vendor/bin/php-cs-fixer fix
+	podman-compose exec app ./vendor/bin/php-cs-fixer fix --allow-risky=yes
 
 # Cache management
 cache-clear: ## Clear application cache

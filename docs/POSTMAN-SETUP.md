@@ -3,6 +3,7 @@
 ## 🚀 Início Rápido (5 minutos)
 
 ### 1. **Inicie a API**
+
 ```bash
 cd api-php
 make up
@@ -12,6 +13,7 @@ make up
 ### 2. **Importe no Postman**
 
 #### **Opção A: Importar Arquivos (Recomendado)**
+
 1. Abra o Postman
 2. Clique em **Import** (canto superior esquerdo)
 3. Arraste os arquivos:
@@ -20,12 +22,14 @@ make up
 4. Clique em **Import**
 
 #### **Opção B: Importar por URL**
+
 ```
 Collection: https://raw.githubusercontent.com/seu-usuario/api-php/main/docs/postman-collection.json
 Environment: https://raw.githubusercontent.com/seu-usuario/api-php/main/docs/postman-environment.json
 ```
 
 ### 3. **Configurar Environment**
+
 1. No canto superior direito, selecione **"Robust API - Development"**
 2. Verifique se `base_url` está como `http://localhost:8000`
 
@@ -44,6 +48,7 @@ Environment: https://raw.githubusercontent.com/seu-usuario/api-php/main/docs/pos
 ## 📋 Collection Completa
 
 ### 📁 **Estrutura da Collection**
+
 ```
 📁 Robust PHP API
 ├── 🏥 Health Check
@@ -52,7 +57,7 @@ Environment: https://raw.githubusercontent.com/seu-usuario/api-php/main/docs/pos
 │   ├── 🔐 Login (salva tokens automaticamente)
 │   ├── 🔄 Refresh Token
 │   └── 🚪 Logout
-├── 👥 Users  
+├── 👥 Users
 │   ├── 📋 List Users
 │   └── 👁️ Get User by ID
 ├── 🔒 Protected Routes
@@ -68,16 +73,19 @@ Environment: https://raw.githubusercontent.com/seu-usuario/api-php/main/docs/pos
 ## 🎯 **Features Automáticas**
 
 ### **🔑 Gerenciamento de Tokens**
+
 - Login salva automaticamente `access_token` e `refresh_token`
 - Refresh atualiza automaticamente os tokens
 - Todas as rotas protegidas usam `{{access_token}}`
 
 ### **🧪 Scripts de Teste**
+
 - Validação automática de responses
 - Logs informativos no console
 - Salvamento automático de variáveis
 
 ### **📊 Variáveis de Environment**
+
 - `{{base_url}}` - URL base da API
 - `{{access_token}}` - Token JWT ativo
 - `{{refresh_token}}` - Token de renovação
@@ -86,24 +94,28 @@ Environment: https://raw.githubusercontent.com/seu-usuario/api-php/main/docs/pos
 ## 🔍 **Exemplos de Requests**
 
 ### **1. Health Check**
+
 ```http
 GET {{base_url}}/health
 ```
+
 **Response:** Status da API
 
 ### **2. Registrar Usuário**
+
 ```http
 POST {{base_url}}/api/v1/auth/register
 Content-Type: application/json
 
 {
   "name": "João Silva",
-  "email": "joao@example.com", 
+  "email": "joao@example.com",
   "password": "minhasenha123"
 }
 ```
 
 ### **3. Login**
+
 ```http
 POST {{base_url}}/api/v1/auth/login
 Content-Type: application/json
@@ -113,9 +125,11 @@ Content-Type: application/json
   "password": "minhasenha123"
 }
 ```
+
 **⚡ Tokens salvos automaticamente!**
 
 ### **4. Rota Protegida**
+
 ```http
 GET {{base_url}}/api/v1/protected/profile
 Authorization: Bearer {{access_token}}
@@ -124,6 +138,7 @@ Authorization: Bearer {{access_token}}
 ## 🚨 **Testando Erros**
 
 ### **Validação (422)**
+
 ```json
 {
   "name": "",
@@ -133,16 +148,19 @@ Authorization: Bearer {{access_token}}
 ```
 
 ### **Autenticação (401)**
+
 ```http
 Authorization: Bearer token-inválido
 ```
 
 ### **Rate Limiting (429)**
+
 Faça mais de 100 requests em 1 hora
 
 ## 🔧 **Troubleshooting**
 
 ### **❌ API não responde**
+
 ```bash
 # Verificar se containers estão rodando
 make logs
@@ -152,15 +170,18 @@ curl http://localhost:8000/health
 ```
 
 ### **❌ Token inválido**
+
 1. Refaça o login
 2. Verifique se token não expirou em [jwt.io](https://jwt.io)
 3. Verifique variável `{{access_token}}`
 
 ### **❌ CORS Error**
+
 - Adicione headers: `Accept: application/json`
 - Verifique se `Content-Type: application/json` está presente
 
 ### **❌ 404 Not Found**
+
 - Verifique se URL está correta
 - Confirme se API está rodando na porta 8000
 

@@ -69,30 +69,30 @@ final class Application
         });
 
         // API routes
-        $this->app->group('/api/v1', function () {
+        $this->app->group('/api/v1', function ($group) {
             // Authentication routes
-            $this->group('/auth', function () {
-                $this->post('/register', '\App\Presentation\Controllers\AuthController:register');
-                $this->post('/login', '\App\Presentation\Controllers\AuthController:login');
-                $this->post('/refresh', '\App\Presentation\Controllers\AuthController:refresh');
-                $this->post('/logout', '\App\Presentation\Controllers\AuthController:logout');
-                $this->post('/forgot-password', '\App\Presentation\Controllers\AuthController:forgotPassword');
-                $this->post('/reset-password', '\App\Presentation\Controllers\AuthController:resetPassword');
+            $group->group('/auth', function ($authGroup) {
+                $authGroup->post('/register', '\App\Presentation\Controllers\AuthController:register');
+                $authGroup->post('/login', '\App\Presentation\Controllers\AuthController:login');
+                $authGroup->post('/refresh', '\App\Presentation\Controllers\AuthController:refresh');
+                $authGroup->post('/logout', '\App\Presentation\Controllers\AuthController:logout');
+                $authGroup->post('/forgot-password', '\App\Presentation\Controllers\AuthController:forgotPassword');
+                $authGroup->post('/reset-password', '\App\Presentation\Controllers\AuthController:resetPassword');
             });
 
             // User routes
-            $this->group('/users', function () {
-                $this->get('', '\App\Presentation\Controllers\UserController:index');
-                $this->get('/{id}', '\App\Presentation\Controllers\UserController:show');
-                $this->put('/{id}', '\App\Presentation\Controllers\UserController:update');
-                $this->delete('/{id}', '\App\Presentation\Controllers\UserController:delete');
-                $this->get('/{id}/profile', '\App\Presentation\Controllers\UserController:profile');
+            $group->group('/users', function ($userGroup) {
+                $userGroup->get('', '\App\Presentation\Controllers\UserController:index');
+                $userGroup->get('/{id}', '\App\Presentation\Controllers\UserController:show');
+                $userGroup->put('/{id}', '\App\Presentation\Controllers\UserController:update');
+                $userGroup->delete('/{id}', '\App\Presentation\Controllers\UserController:delete');
+                $userGroup->get('/{id}/profile', '\App\Presentation\Controllers\UserController:profile');
             });
 
             // Protected routes example
-            $this->group('/protected', function () {
-                $this->get('/profile', '\App\Presentation\Controllers\ProfileController:show');
-                $this->put('/profile', '\App\Presentation\Controllers\ProfileController:update');
+            $group->group('/protected', function ($protectedGroup) {
+                $protectedGroup->get('/profile', '\App\Presentation\Controllers\ProfileController:show');
+                $protectedGroup->put('/profile', '\App\Presentation\Controllers\ProfileController:update');
             })->add('\App\Presentation\Middleware\AuthMiddleware');
         });
 

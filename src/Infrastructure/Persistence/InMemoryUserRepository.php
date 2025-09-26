@@ -13,6 +13,17 @@ final class InMemoryUserRepository implements UserRepositoryInterface
 {
     private array $users = [];
 
+    public function __construct()
+    {
+        // Criar usuário padrão para demonstração
+        $defaultUser = \App\Domain\Entities\User::create(
+            'Usuário Teste',
+            'joao@example.com',
+            'minhasenha123'
+        );
+        $this->users[$defaultUser->getId()->toString()] = $defaultUser;
+    }
+
     public function save(User $user): void
     {
         $this->users[$user->getId()->toString()] = $user;

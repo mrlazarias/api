@@ -11,7 +11,7 @@
 
 **🏆 API PHP de Nível Empresarial que Destaca no Mercado**
 
-*Demonstração completa de expertise em arquitetura moderna, segurança avançada e DevOps profissional*
+_Demonstração completa de expertise em arquitetura moderna, segurança avançada e DevOps profissional_
 
 </div>
 
@@ -23,12 +23,12 @@ Esta **não é apenas mais uma API PHP**. É uma **demonstração completa de do
 
 ### 🔥 **Diferenciais Únicos:**
 
-| 🏗️ **Arquitetura** | 🔐 **Segurança** | 🚀 **Performance** | 🐳 **DevOps** |
-|:---:|:---:|:---:|:---:|
-| Clean Architecture | JWT + Refresh Tokens | Redis Cache Inteligente | Multi-stage Builds |
-| CQRS Ready | Argon2ID Encryption | OPcache Otimizado | Podman Orchestration |
-| Domain-Driven Design | Rate Limiting Avançado | < 100ms Response | Zero-Downtime Deploy |
-| 100% Testável | OWASP Compliant | > 1000 req/s | Health Monitoring |
+|  🏗️ **Arquitetura**  |    🔐 **Segurança**    |   🚀 **Performance**    |    🐳 **DevOps**     |
+| :------------------: | :--------------------: | :---------------------: | :------------------: |
+|  Clean Architecture  |  JWT + Refresh Tokens  | Redis Cache Inteligente |  Multi-stage Builds  |
+|      CQRS Ready      |  Argon2ID Encryption   |    OPcache Otimizado    | Podman Orchestration |
+| Domain-Driven Design | Rate Limiting Avançado |    < 100ms Response     | Zero-Downtime Deploy |
+|    100% Testável     |    OWASP Compliant     |      > 1000 req/s       |  Health Monitoring   |
 
 ---
 
@@ -67,7 +67,7 @@ Esta **não é apenas mais uma API PHP**. É uma **demonstração completa de do
 POST /api/v1/auth/login
 {
   "access_token": "eyJ...",     // 1h TTL
-  "refresh_token": "eyJ...",    // 24h TTL  
+  "refresh_token": "eyJ...",    // 24h TTL
   "token_type": "Bearer",
   "expires_in": 3600
 }
@@ -78,6 +78,7 @@ Authorization: Bearer <refresh_token>
 ```
 
 **🔒 Segurança Implementada:**
+
 - ✅ **Argon2ID** (mais seguro que bcrypt)
 - ✅ **Token Rotation** (OAuth2 best practices)
 - ✅ **JTI Blacklisting** (logout seguro)
@@ -92,8 +93,8 @@ Authorization: Bearer <refresh_token>
 class CacheFactory {
     public static function create() {
         // Tenta Redis primeiro, fallback para File
-        return Redis::isAvailable() 
-            ? new RedisCache() 
+        return Redis::isAvailable()
+            ? new RedisCache()
             : new FileCache();
     }
 }
@@ -105,6 +106,7 @@ $user = $cache->remember("user:{$id}", function() use ($id) {
 ```
 
 **📊 Métricas Reais:**
+
 - ⚡ **Response Time**: < 100ms (95th percentile)
 - 🚀 **Throughput**: > 1,000 requests/second
 - 💾 **Cache Hit Ratio**: > 90%
@@ -118,10 +120,10 @@ class RateLimitMiddleware {
     // Diferentes limites por contexto
     private const LIMITS = [
         'authenticated' => [1000, 3600],  // 1000/hora
-        'anonymous'     => [100, 3600],   // 100/hora  
+        'anonymous'     => [100, 3600],   // 100/hora
         'admin'         => [5000, 3600],  // 5000/hora
     ];
-    
+
     // Headers informativos
     'X-RateLimit-Remaining' => '999',
     'X-RateLimit-Reset'     => '1640995200'
@@ -129,6 +131,7 @@ class RateLimitMiddleware {
 ```
 
 **🔒 Camadas de Segurança:**
+
 - ✅ **Input Validation** (Respect/Validation)
 - ✅ **SQL Injection** (Doctrine ORM + Prepared Statements)
 - ✅ **XSS Protection** (Content Security Policy)
@@ -142,17 +145,18 @@ class RateLimitMiddleware {
 FROM php:8.2-fpm-alpine AS base
 # ... dependências base
 
-FROM base AS development  
+FROM base AS development
 # Xdebug, logs verbosos, hot reload
 COPY docker/php/dev.ini /usr/local/etc/php/
 
 FROM base AS production
-# OPcache, logs otimizados, assets minificados  
+# OPcache, logs otimizados, assets minificados
 COPY docker/php/prod.ini /usr/local/etc/php/
 RUN composer install --no-dev --optimize-autoloader
 ```
 
 **🚀 Orquestração Completa:**
+
 - 🐘 **PHP-FPM** (aplicação)
 - 🌐 **Nginx** (proxy reverso otimizado)
 - 🗄️ **MySQL 8.0** (dados persistentes)
@@ -164,20 +168,21 @@ RUN composer install --no-dev --optimize-autoloader
 
 ## 📊 **Métricas que Impressionam em Entrevistas**
 
-| Métrica | Valor | Benchmark Mercado |
-|---------|-------|-------------------|
-| 🚀 **Response Time** | < 100ms | < 200ms (good) |
-| 📈 **Throughput** | > 1,000 req/s | > 500 req/s (good) |
-| 💾 **Cache Hit Ratio** | > 90% | > 70% (good) |
-| 🔒 **Security Score** | A+ | B+ (good) |
-| 🧪 **Test Coverage** | > 90% | > 80% (good) |
-| 📦 **Container Size** | < 200MB | < 500MB (good) |
+| Métrica                | Valor         | Benchmark Mercado  |
+| ---------------------- | ------------- | ------------------ |
+| 🚀 **Response Time**   | < 100ms       | < 200ms (good)     |
+| 📈 **Throughput**      | > 1,000 req/s | > 500 req/s (good) |
+| 💾 **Cache Hit Ratio** | > 90%         | > 70% (good)       |
+| 🔒 **Security Score**  | A+            | B+ (good)          |
+| 🧪 **Test Coverage**   | > 90%         | > 80% (good)       |
+| 📦 **Container Size**  | < 200MB       | < 500MB (good)     |
 
 ---
 
 ## 🚀 **Início Rápido (5 minutos)**
 
 ### 1️⃣ **Clone & Setup**
+
 ```bash
 git clone https://github.com/seu-usuario/robust-php-api.git
 cd robust-php-api
@@ -185,12 +190,14 @@ make setup  # Cria .env automaticamente
 ```
 
 ### 2️⃣ **Execute com Podman**
+
 ```bash
 make build  # Build otimizado
 make up     # Inicia orquestração completa
 ```
 
 ### 3️⃣ **Teste no Postman**
+
 ```bash
 # Importe automaticamente
 docs/postman-collection.json    # 15+ endpoints
@@ -198,6 +205,7 @@ docs/postman-environment.json   # Variáveis configuradas
 ```
 
 ### 4️⃣ **Verifique Funcionamento**
+
 ```bash
 curl http://localhost:8000/health
 # {"status":"ok","version":"1.0.0","environment":"development"}
@@ -210,14 +218,16 @@ make api-test  # Suite completa de testes
 ## 🎯 **Endpoints Principais**
 
 ### 🔐 **Autenticação**
+
 ```http
 POST /api/v1/auth/register    # Registro com validação
-POST /api/v1/auth/login       # JWT + Refresh token  
+POST /api/v1/auth/login       # JWT + Refresh token
 POST /api/v1/auth/refresh     # Renovação automática
 POST /api/v1/auth/logout      # Logout seguro
 ```
 
-### 👥 **Usuários** 
+### 👥 **Usuários**
+
 ```http
 GET    /api/v1/users          # Lista paginada
 GET    /api/v1/users/{id}     # Usuário específico
@@ -226,6 +236,7 @@ DELETE /api/v1/users/{id}     # Remoção
 ```
 
 ### 🔒 **Protegidas (JWT Required)**
+
 ```http
 GET /api/v1/protected/profile  # Perfil do usuário
 PUT /api/v1/protected/profile  # Atualização de perfil
@@ -236,11 +247,13 @@ PUT /api/v1/protected/profile  # Atualização de perfil
 ## 📖 **Documentação Profissional**
 
 ### 📋 **OpenAPI 3.0 Completa**
+
 - 📄 **Spec YAML**: `docs/api-spec.yml`
 - 🌐 **Swagger UI**: `http://localhost:8000/docs`
 - 📮 **Postman Collection**: Importação com 1 clique
 
 ### 📚 **Guias Detalhados**
+
 - 🚀 **[Setup Rápido](docs/POSTMAN-SETUP.md)**: 5 minutos para testar
 - 🔧 **[Troubleshooting](TROUBLESHOOTING.md)**: Soluções para problemas comuns
 - 🏗️ **[Arquitetura](docs/ARCHITECTURE.md)**: Design decisions
@@ -254,7 +267,7 @@ PUT /api/v1/protected/profile  # Atualização de perfil
 # Análise estática
 make phpstan     # Level 8 (máximo)
 
-# Padrões de código  
+# Padrões de código
 make cs-check    # PSR-12 + custom rules
 make cs-fix      # Auto-fix
 
@@ -264,6 +277,7 @@ make test-coverage   # > 90% coverage
 ```
 
 **🏆 Métricas de Qualidade:**
+
 - ✅ **PHPStan Level 8** (análise estática máxima)
 - ✅ **PSR-12 Compliant** (padrões oficiais PHP)
 - ✅ **90%+ Test Coverage** (confiabilidade)
@@ -274,18 +288,21 @@ make test-coverage   # > 90% coverage
 ## 🌟 **Por Que Esta API Destaca Seu Portfólio?**
 
 ### 🎯 **Para Recrutadores Técnicos:**
+
 - ✅ **Arquitetura Limpa** → "Sabe escalar sistemas"
-- ✅ **Segurança Avançada** → "Entende compliance"  
+- ✅ **Segurança Avançada** → "Entende compliance"
 - ✅ **Performance Otimizada** → "Pensa em custos"
 - ✅ **DevOps Completo** → "Deploy independente"
 
 ### 🚀 **Para Tech Leads:**
+
 - ✅ **Código Testável** → "Reduz bugs em produção"
 - ✅ **Documentação Completa** → "Facilita onboarding"
 - ✅ **Padrões Consistentes** → "Manutenível por equipes"
 - ✅ **Monitoramento Built-in** → "Observabilidade nativa"
 
 ### 💼 **Para CTOs/Arquitetos:**
+
 - ✅ **ROI Comprovado** → "Reduz time-to-market"
 - ✅ **Escalabilidade Horizontal** → "Suporta crescimento"
 - ✅ **Compliance Ready** → "Atende regulamentações"
@@ -297,10 +314,10 @@ make test-coverage   # > 90% coverage
 
 <div align="center">
 
-| Backend | Database | Cache | DevOps | Quality |
-|:-------:|:--------:|:-----:|:------:|:-------:|
+|                                     Backend                                     |                                               Database                                               |                                                Cache                                                |                                         DevOps                                         |                                         Quality                                          |
+| :-----------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: |
 | ![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=flat-square&logo=php) | ![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql&logoColor=white) | ![Redis](https://img.shields.io/badge/Redis-7+-DC382D?style=flat-square&logo=redis&logoColor=white) | ![Podman](https://img.shields.io/badge/Podman-4+-892CA0?style=flat-square&logo=podman) | ![PHPStan](https://img.shields.io/badge/PHPStan-Level%208-brightgreen?style=flat-square) |
-| ![Slim](https://img.shields.io/badge/Slim-4.15-green?style=flat-square) | ![Doctrine](https://img.shields.io/badge/Doctrine-ORM-orange?style=flat-square) | ![Memcached](https://img.shields.io/badge/File%20Cache-Fallback-yellow?style=flat-square) | ![Nginx](https://img.shields.io/badge/Nginx-1.28-green?style=flat-square&logo=nginx) | ![Pest](https://img.shields.io/badge/Pest-Testing-red?style=flat-square) |
+|     ![Slim](https://img.shields.io/badge/Slim-4.15-green?style=flat-square)     |           ![Doctrine](https://img.shields.io/badge/Doctrine-ORM-orange?style=flat-square)            |      ![Memcached](https://img.shields.io/badge/File%20Cache-Fallback-yellow?style=flat-square)      |  ![Nginx](https://img.shields.io/badge/Nginx-1.28-green?style=flat-square&logo=nginx)  |         ![Pest](https://img.shields.io/badge/Pest-Testing-red?style=flat-square)         |
 
 </div>
 
@@ -309,15 +326,17 @@ make test-coverage   # > 90% coverage
 ## 📈 **Roadmap & Próximas Features**
 
 ### 🚀 **V2.0 - Microservices Ready**
+
 - [ ] **Event Sourcing** (Event Store)
 - [ ] **CQRS Completo** (Command/Query separation)
 - [ ] **Message Queue** (RabbitMQ/Apache Kafka)
 - [ ] **Distributed Tracing** (Jaeger/Zipkin)
 
 ### 🔮 **V3.0 - Cloud Native**
+
 - [ ] **Kubernetes** manifests
 - [ ] **Prometheus** metrics
-- [ ] **Grafana** dashboards  
+- [ ] **Grafana** dashboards
 - [ ] **Istio** service mesh
 
 ---
@@ -337,12 +356,12 @@ git checkout -b docs/atualizacao-readme
 
 # 3. Commit com Conventional Commits
 git commit -m "feat: add user profile endpoint"
-git commit -m "fix: resolve JWT expiration issue"  
+git commit -m "fix: resolve JWT expiration issue"
 git commit -m "docs: update API documentation"
 
 # 4. Quality Gates
 make cs-check    # Code style
-make phpstan     # Static analysis  
+make phpstan     # Static analysis
 make test        # All tests pass
 
 # 5. Pull Request
@@ -361,14 +380,14 @@ MIT License - Use em projetos comerciais sem restrições.
 
 <div align="center">
 
-**Murilo Azarias**  
-*Senior Backend Engineer*
+**Murilo Azarias**
+_Senior Backend Engineer_
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/muriloazarias)
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github)](https://github.com/muriloazarias)
 [![Email](https://img.shields.io/badge/Email-Contact-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:murilo@example.com)
 
-*"Code is poetry, architecture is symphony"*
+_"Code is poetry, architecture is symphony"_
 
 </div>
 

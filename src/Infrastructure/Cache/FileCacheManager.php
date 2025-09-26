@@ -102,13 +102,15 @@ final class FileCacheManager
     public function flush(): bool
     {
         $files = glob($this->cacheDir . '/*');
-
-        foreach ($files as $file) {
-            if (is_file($file)) {
-                unlink($file);
+        
+        if ($files !== false) {
+            foreach ($files as $file) {
+                if (is_file($file)) {
+                    unlink($file);
+                }
             }
         }
-
+        
         return true;
     }
 

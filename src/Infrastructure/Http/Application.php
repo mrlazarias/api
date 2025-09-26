@@ -25,6 +25,15 @@ final class Application
         $this->configureRoutes();
     }
 
+    private function writeJson(Response $response, array $data): Response
+    {
+        $json = json_encode($data);
+        if ($json !== false) {
+            $response->getBody()->write($json);
+        }
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
     public static function create(): self
     {
         return new self();
@@ -64,8 +73,7 @@ final class Application
                 'environment' => $_ENV['APP_ENV'] ?? 'production',
             ];
 
-            $response->getBody()->write(json_encode($data));
-            return $response->withHeader('Content-Type', 'application/json');
+            return $this->writeJson($response, $data);
         });
 
         // API routes
@@ -97,7 +105,7 @@ final class Application
         });
 
         // Catch all route for API 404
-        $this->app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/api/{routes:.+}',
+        $this->app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/api/{routes:.+}', 
             function (Request $request, Response $response) {
                 $data = [
                     'error' => 'Not Found',
@@ -105,10 +113,7 @@ final class Application
                     'code' => 404,
                 ];
 
-                $response->getBody()->write(json_encode($data));
-                return $response
-                    ->withStatus(404)
-                    ->withHeader('Content-Type', 'application/json');
+                return $this->writeJson($response->withStatus(404), $data);
             }
         );
     }

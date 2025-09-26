@@ -24,15 +24,30 @@ final class AuthController
         $userRepository = new InMemoryUserRepository();
         $jwtManager = new JwtManager();
         $cacheManager = CacheFactory::create();
-
+        
         $this->authService = new AuthService($userRepository, $jwtManager, $cacheManager);
+    }
+
+    private function writeJson(Response $response, array $data, int $statusCode = 200): Response
+    {
+        $json = json_encode($data);
+        if ($json !== false) {
+            $response->getBody()->write($json);
+        }
+        return $response
+            ->withStatus($statusCode)
+            ->withHeader('Content-Type', 'application/json');
     }
 
     public function register(Request $request, Response $response): Response
     {
         try {
             $data = $request->getParsedBody();
-
+            
+            if (!is_array($data)) {
+                throw new ValidationException('Invalid request body format');
+            }
+            
             $this->validateRegistrationData($data);
 
             $user = $this->authService->register(
@@ -45,11 +60,8 @@ final class AuthController
                 'message' => 'User registered successfully',
                 'user' => $user->toArray(),
             ];
-
-            $response->getBody()->write(json_encode($result));
-            return $response
-                ->withStatus(201)
-                ->withHeader('Content-Type', 'application/json');
+            
+            return $this->writeJson($response, $result, 201);
 
         } catch (ValidationException $e) {
             $error = [
@@ -69,7 +81,11 @@ final class AuthController
     {
         try {
             $data = $request->getParsedBody();
-
+            
+            if (!is_array($data)) {
+                throw new ValidationException('Invalid request body format');
+            }
+            
             $this->validateLoginData($data);
 
             $tokens = $this->authService->login($data['email'], $data['password']);
@@ -107,8 +123,8 @@ final class AuthController
     {
         try {
             $data = $request->getParsedBody();
-
-            if (empty($data['refresh_token'])) {
+            
+            if (!is_array($data) || empty($data['refresh_token'])) {
                 throw new ValidationException('Refresh token is required');
             }
 

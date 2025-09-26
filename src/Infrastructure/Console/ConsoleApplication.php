@@ -15,10 +15,10 @@ final class ConsoleApplication extends Application
     {
         parent::__construct('Robust API Console', '1.0.0');
 
-        $this->addCommands();
+        $this->setupCommands();
     }
 
-    private function addCommands(): void
+    private function setupCommands(): void
     {
         // Add custom commands here
         $this->add(new class('cache:clear') extends Command {

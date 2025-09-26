@@ -33,12 +33,14 @@ final class Email
 
     public function getDomain(): string
     {
-        return substr($this->value, strpos($this->value, '@') + 1);
+        $atPos = strpos($this->value, '@');
+        return $atPos !== false ? substr($this->value, $atPos + 1) : '';
     }
 
     public function getLocalPart(): string
     {
-        return substr($this->value, 0, strpos($this->value, '@'));
+        $atPos = strpos($this->value, '@');
+        return $atPos !== false ? substr($this->value, 0, $atPos) : '';
     }
 
     public function __toString(): string

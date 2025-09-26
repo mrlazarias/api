@@ -30,7 +30,7 @@ final class InMemoryUserRepository implements UserRepositoryInterface
                 return $user;
             }
         }
-        
+
         return null;
     }
 

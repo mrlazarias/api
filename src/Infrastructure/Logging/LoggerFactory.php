@@ -17,15 +17,15 @@ final class LoggerFactory
     public static function create(string $name = 'app'): LoggerInterface
     {
         $logger = new Logger($name);
-        
+
         $logLevel = strtoupper($_ENV['LOG_LEVEL'] ?? 'INFO');
         $logPath = $_ENV['LOG_PATH'] ?? 'storage/logs';
-        
+
         // Ensure log directory exists
         if (!is_dir($logPath)) {
             mkdir($logPath, 0755, true);
         }
-        
+
         // Add handlers
         if ($_ENV['APP_ENV'] === 'production') {
             $handler = new RotatingFileHandler(
@@ -39,14 +39,14 @@ final class LoggerFactory
                 constant("Monolog\Logger::{$logLevel}")
             );
         }
-        
+
         $logger->pushHandler($handler);
-        
+
         // Add processors for additional context
         $logger->pushProcessor(new IntrospectionProcessor());
         $logger->pushProcessor(new MemoryUsageProcessor());
         $logger->pushProcessor(new WebProcessor());
-        
+
         return $logger;
     }
 }

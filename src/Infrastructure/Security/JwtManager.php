@@ -28,7 +28,7 @@ final class JwtManager
     public function generateToken(array $payload): string
     {
         $now = time();
-        
+
         $tokenPayload = array_merge($payload, [
             'iat' => $now,
             'exp' => $now + $this->expiry,
@@ -42,7 +42,7 @@ final class JwtManager
     public function generateRefreshToken(array $payload): string
     {
         $now = time();
-        
+
         $tokenPayload = array_merge($payload, [
             'iat' => $now,
             'exp' => $now + $this->refreshExpiry,
@@ -71,7 +71,7 @@ final class JwtManager
     public function refreshToken(string $refreshToken): array
     {
         $payload = $this->validateToken($refreshToken);
-        
+
         if (!isset($payload['type']) || $payload['type'] !== 'refresh') {
             throw new DomainException('Invalid refresh token', 401);
         }

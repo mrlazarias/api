@@ -12,7 +12,7 @@ final class ProfileController
     public function show(Request $request, Response $response): Response
     {
         $user = $request->getAttribute('user');
-        
+
         if (!$user) {
             $error = ['error' => 'User not found in request'];
             $response->getBody()->write(json_encode($error));
@@ -20,7 +20,7 @@ final class ProfileController
                 ->withStatus(500)
                 ->withHeader('Content-Type', 'application/json');
         }
-        
+
         $response->getBody()->write(json_encode($user->toArray()));
         return $response->withHeader('Content-Type', 'application/json');
     }
@@ -29,13 +29,13 @@ final class ProfileController
     {
         $user = $request->getAttribute('user');
         $data = $request->getParsedBody();
-        
+
         // Implementation for profile update
         $result = [
             'message' => 'Profile updated successfully',
             'user' => $user->toArray(),
         ];
-        
+
         $response->getBody()->write(json_encode($result));
         return $response->withHeader('Content-Type', 'application/json');
     }

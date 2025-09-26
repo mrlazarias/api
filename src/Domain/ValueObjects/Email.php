@@ -13,11 +13,11 @@ final class Email
     public function __construct(string $value)
     {
         $value = trim(strtolower($value));
-        
+
         if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
             throw new DomainException('Invalid email format');
         }
-        
+
         $this->value = $value;
     }
 

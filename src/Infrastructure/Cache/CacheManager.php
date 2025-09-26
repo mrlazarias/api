@@ -24,11 +24,11 @@ final class CacheManager
     public function get(string $key, mixed $default = null): mixed
     {
         $value = $this->redis->get($key);
-        
+
         if ($value === null) {
             return $default;
         }
-        
+
         $decoded = json_decode($value, true);
         return $decoded === null ? $value : $decoded;
     }
@@ -36,11 +36,11 @@ final class CacheManager
     public function set(string $key, mixed $value, ?int $ttl = null): bool
     {
         $encodedValue = is_string($value) ? $value : json_encode($value);
-        
+
         if ($ttl !== null) {
             return (bool) $this->redis->setex($key, $ttl, $encodedValue);
         }
-        
+
         return (bool) $this->redis->set($key, $encodedValue);
     }
 
@@ -74,10 +74,10 @@ final class CacheManager
         if ($this->exists($key)) {
             return $this->get($key);
         }
-        
+
         $value = $callback();
         $this->set($key, $value, $ttl);
-        
+
         return $value;
     }
 }

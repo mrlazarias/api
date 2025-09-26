@@ -24,33 +24,33 @@ final class AuthMiddleware implements MiddlewareInterface
         $userRepository = new InMemoryUserRepository();
         $jwtManager = new JwtManager();
         $cacheManager = new CacheManager();
-        
+
         $this->authService = new AuthService($userRepository, $jwtManager, $cacheManager);
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $authHeader = $request->getHeaderLine('Authorization');
-        
+
         if (empty($authHeader) || !str_starts_with($authHeader, 'Bearer ')) {
             return $this->unauthorizedResponse('Missing or invalid authorization header');
         }
-        
+
         $token = substr($authHeader, 7);
         $user = $this->authService->getUserFromToken($token);
-        
+
         if (!$user) {
             return $this->unauthorizedResponse('Invalid or expired token');
         }
-        
+
         if (!$user->isActive()) {
             return $this->unauthorizedResponse('Account is deactivated');
         }
-        
+
         // Add user to request attributes
         $request = $request->withAttribute('user', $user);
         $request = $request->withAttribute('user_id', $user->getId()->toString());
-        
+
         return $handler->handle($request);
     }
 
@@ -61,9 +61,9 @@ final class AuthMiddleware implements MiddlewareInterface
             'error' => 'Unauthorized',
             'message' => $message,
         ];
-        
+
         $response->getBody()->write(json_encode($error));
-        
+
         return $response
             ->withStatus(401)
             ->withHeader('Content-Type', 'application/json');

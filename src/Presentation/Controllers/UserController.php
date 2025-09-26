@@ -23,10 +23,10 @@ final class UserController
         $queryParams = $request->getQueryParams();
         $limit = min((int) ($queryParams['limit'] ?? 50), 100);
         $offset = (int) ($queryParams['offset'] ?? 0);
-        
+
         $users = $this->userRepository->findAll($limit, $offset);
         $total = $this->userRepository->count();
-        
+
         $result = [
             'data' => array_map(fn($user) => $user->toArray(), $users),
             'meta' => [
@@ -36,7 +36,7 @@ final class UserController
                 'has_more' => ($offset + $limit) < $total,
             ],
         ];
-        
+
         $response->getBody()->write(json_encode($result));
         return $response->withHeader('Content-Type', 'application/json');
     }
@@ -46,7 +46,7 @@ final class UserController
         try {
             $userId = new UserId($args['id']);
             $user = $this->userRepository->findById($userId);
-            
+
             if (!$user) {
                 $error = ['error' => 'User not found'];
                 $response->getBody()->write(json_encode($error));
@@ -54,10 +54,10 @@ final class UserController
                     ->withStatus(404)
                     ->withHeader('Content-Type', 'application/json');
             }
-            
+
             $response->getBody()->write(json_encode($user->toArray()));
             return $response->withHeader('Content-Type', 'application/json');
-            
+
         } catch (\Exception $e) {
             $error = ['error' => 'Invalid user ID format'];
             $response->getBody()->write(json_encode($error));

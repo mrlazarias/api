@@ -18,6 +18,12 @@ setup: ## Initial setup - copy env file and install dependencies
 build: ## Build the containers
 	podman-compose build
 
+build-simple: ## Build with simplified Containerfile (if main build fails)
+	podman build -f Containerfile.simple -t robust-api:dev --target development .
+
+build-no-cache: ## Build containers without cache
+	podman-compose build --no-cache
+
 up: ## Start the containers
 	podman-compose up -d
 

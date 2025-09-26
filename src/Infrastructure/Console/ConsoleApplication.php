@@ -14,7 +14,7 @@ final class ConsoleApplication extends Application
     public function __construct()
     {
         parent::__construct('Robust API Console', '1.0.0');
-        
+
         $this->addCommands();
     }
 

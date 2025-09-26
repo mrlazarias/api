@@ -39,16 +39,16 @@ final class Application
     {
         // Error handler middleware (should be first)
         $this->app->add(new ErrorHandlerMiddleware(LoggerFactory::create()));
-        
+
         // CORS middleware
         $this->app->add(new CorsMiddleware());
-        
+
         // Rate limiting middleware
         $this->app->add(new RateLimitMiddleware());
-        
+
         // JSON body parser middleware
         $this->app->add(new JsonBodyParserMiddleware());
-        
+
         // Built-in routing middleware
         $this->app->addRoutingMiddleware();
     }
@@ -63,7 +63,7 @@ final class Application
                 'version' => '1.0.0',
                 'environment' => $_ENV['APP_ENV'] ?? 'production',
             ];
-            
+
             $response->getBody()->write(json_encode($data));
             return $response->withHeader('Content-Type', 'application/json');
         });
@@ -97,14 +97,14 @@ final class Application
         });
 
         // Catch all route for API 404
-        $this->app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/api/{routes:.+}', 
+        $this->app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/api/{routes:.+}',
             function (Request $request, Response $response) {
                 $data = [
                     'error' => 'Not Found',
                     'message' => 'The requested endpoint was not found',
                     'code' => 404,
                 ];
-                
+
                 $response->getBody()->write(json_encode($data));
                 return $response
                     ->withStatus(404)

@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS api_logs (
 );
 
 -- Insert sample admin user (password: admin123)
-INSERT INTO users (id, name, email, password_hash, is_active, is_verified, roles, email_verified_at) VALUES 
+INSERT INTO users (id, name, email, password_hash, is_active, is_verified, roles, email_verified_at) VALUES
 ('550e8400-e29b-41d4-a716-446655440000', 'Admin User', 'admin@example.com', '$argon2id$v=19$m=65536,t=4,p=3$YWRtaW4xMjM$8K8K8K8K8K8K8K8K8K8K8K8K8K8K8K8K8K8K8K8K8K8', TRUE, TRUE, '["admin", "user"]', NOW())
 ON DUPLICATE KEY UPDATE name = name;
 

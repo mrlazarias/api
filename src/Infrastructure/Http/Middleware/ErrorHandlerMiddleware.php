@@ -78,7 +78,7 @@ final class ErrorHandlerMiddleware implements MiddlewareInterface
         }
 
         $response->getBody()->write(json_encode($error, JSON_PRETTY_PRINT));
-        
+
         return $response
             ->withStatus($statusCode)
             ->withHeader('Content-Type', 'application/json');

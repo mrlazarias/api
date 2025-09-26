@@ -22,15 +22,15 @@ final class AuthService
     public function register(string $name, string $email, string $password): User
     {
         $emailVo = new Email($email);
-        
+
         // Check if email already exists
         if ($this->userRepository->emailExists($emailVo)) {
             throw new DomainException('Email already registered', 409);
         }
-        
+
         $user = User::create($name, $email, $password);
         $this->userRepository->save($user);
-        
+
         return $user;
     }
 
@@ -38,31 +38,31 @@ final class AuthService
     {
         $emailVo = new Email($email);
         $user = $this->userRepository->findByEmail($emailVo);
-        
+
         if (!$user || !$user->verifyPassword($password)) {
             throw new DomainException('Invalid credentials', 401);
         }
-        
+
         if (!$user->isActive()) {
             throw new DomainException('Account is deactivated', 401);
         }
-        
+
         $payload = [
             'user_id' => $user->getId()->toString(),
             'email' => $user->getEmail()->toString(),
             'roles' => $user->getRoles(),
         ];
-        
+
         $accessToken = $this->jwtManager->generateToken($payload);
         $refreshToken = $this->jwtManager->generateRefreshToken($payload);
-        
+
         // Cache user data for faster access
         $this->cache->set(
-            "user:{$user->getId()->toString()}", 
-            $user->toArray(), 
+            "user:{$user->getId()->toString()}",
+            $user->toArray(),
             3600
         );
-        
+
         return [
             'access_token' => $accessToken,
             'refresh_token' => $refreshToken,
@@ -87,21 +87,21 @@ final class AuthService
         try {
             $payload = $this->jwtManager->validateToken($token);
             $userId = $payload['user_id'] ?? null;
-            
+
             if (!$userId) {
                 return null;
             }
-            
+
             // Try to get from cache first
             $cachedUser = $this->cache->get("user:{$userId}");
             if ($cachedUser) {
                 // Reconstruct User object from cached data
                 return $this->reconstructUserFromArray($cachedUser);
             }
-            
+
             // Fallback to repository
             return $this->userRepository->findById(new \App\Domain\ValueObjects\UserId($userId));
-            
+
         } catch (DomainException) {
             return null;
         }

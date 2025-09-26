@@ -2,19 +2,19 @@ openapi: 3.0.3
 info:
   title: Robust PHP API
   description: |
-    Uma API PHP robusta construída com arquitetura hexagonal, autenticação JWT, cache Redis, 
+    Uma API PHP robusta construída com arquitetura hexagonal, autenticação JWT, cache Redis,
     rate limiting avançado e logging estruturado.
-    
+
     ## Recursos
     - 🔐 Autenticação JWT com refresh tokens
-    - 🚀 Cache inteligente com Redis  
+    - 🚀 Cache inteligente com Redis
     - 🛡️ Rate limiting por usuário/IP
     - 📊 Logging estruturado
     - 🏗️ Arquitetura hexagonal
     - 🐳 Containerização com Podman
     - 📝 Documentação automática
     - ✅ Testes automatizados
-    
+
   version: 1.0.0
   contact:
     name: Murilo Azarias
@@ -37,7 +37,7 @@ paths:
       summary: Health check
       description: Verifica o status da API
       responses:
-        '200':
+        "200":
           description: API is healthy
           content:
             application/json:
@@ -88,7 +88,7 @@ paths:
                   minLength: 8
                   example: "minhasenha123"
       responses:
-        '201':
+        "201":
           description: User registered successfully
           content:
             application/json:
@@ -99,19 +99,19 @@ paths:
                     type: string
                     example: "User registered successfully"
                   user:
-                    $ref: '#/components/schemas/User'
-        '422':
+                    $ref: "#/components/schemas/User"
+        "422":
           description: Validation error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationError'
-        '409':
+                $ref: "#/components/schemas/ValidationError"
+        "409":
           description: Email already registered
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 
   /auth/login:
     post:
@@ -137,24 +137,24 @@ paths:
                   type: string
                   example: "minhasenha123"
       responses:
-        '200':
+        "200":
           description: Login successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthTokens'
-        '401':
+                $ref: "#/components/schemas/AuthTokens"
+        "401":
           description: Invalid credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-        '422':
+                $ref: "#/components/schemas/Error"
+        "422":
           description: Validation error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationError'
+                $ref: "#/components/schemas/ValidationError"
 
   /auth/refresh:
     post:
@@ -175,18 +175,18 @@ paths:
                   type: string
                   example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
       responses:
-        '200':
+        "200":
           description: Token refreshed successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthTokens'
-        '401':
+                $ref: "#/components/schemas/AuthTokens"
+        "401":
           description: Invalid or expired refresh token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 
   /auth/logout:
     post:
@@ -197,7 +197,7 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        '200':
+        "200":
           description: Logout successful
           content:
             application/json:
@@ -233,7 +233,7 @@ paths:
             minimum: 0
             default: 0
       responses:
-        '200':
+        "200":
           description: Users retrieved successfully
           content:
             application/json:
@@ -243,15 +243,15 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/User'
+                      $ref: "#/components/schemas/User"
                   meta:
-                    $ref: '#/components/schemas/PaginationMeta'
-        '401':
+                    $ref: "#/components/schemas/PaginationMeta"
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 
   /users/{id}:
     get:
@@ -270,24 +270,24 @@ paths:
             type: string
             format: uuid
       responses:
-        '200':
+        "200":
           description: User found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-        '404':
+                $ref: "#/components/schemas/User"
+        "404":
           description: User not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-        '401':
+                $ref: "#/components/schemas/Error"
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 
   /protected/profile:
     get:
@@ -298,18 +298,18 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        '200':
+        "200":
           description: Profile retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-        '401':
+                $ref: "#/components/schemas/User"
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 
     put:
       tags:
@@ -335,7 +335,7 @@ paths:
                   format: email
                   example: "joao.santos@example.com"
       responses:
-        '200':
+        "200":
           description: Profile updated successfully
           content:
             application/json:
@@ -346,19 +346,19 @@ paths:
                     type: string
                     example: "Profile updated successfully"
                   user:
-                    $ref: '#/components/schemas/User'
-        '401':
+                    $ref: "#/components/schemas/User"
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-        '422':
+                $ref: "#/components/schemas/Error"
+        "422":
           description: Validation error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationError'
+                $ref: "#/components/schemas/ValidationError"
 
 components:
   securitySchemes:
@@ -423,7 +423,7 @@ components:
           type: integer
           example: 3600
         user:
-          $ref: '#/components/schemas/User'
+          $ref: "#/components/schemas/User"
 
     PaginationMeta:
       type: object
@@ -474,29 +474,29 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
-    
+            $ref: "#/components/schemas/Error"
+
     NotFound:
       description: Resource not found
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
-    
+            $ref: "#/components/schemas/Error"
+
     ValidationError:
       description: Validation error
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ValidationError'
-    
+            $ref: "#/components/schemas/ValidationError"
+
     RateLimitExceeded:
       description: Rate limit exceeded
       content:
         application/json:
           schema:
             allOf:
-              - $ref: '#/components/schemas/Error'
+              - $ref: "#/components/schemas/Error"
               - type: object
                 properties:
                   retry_after:
@@ -513,4 +513,3 @@ tags:
     description: User management
   - name: Profile
     description: User profile management
-

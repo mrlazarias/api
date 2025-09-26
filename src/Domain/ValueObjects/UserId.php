@@ -17,7 +17,7 @@ final class UserId
         if (!Uuid::isValid($value)) {
             throw new DomainException('Invalid user ID format');
         }
-        
+
         $this->value = Uuid::fromString($value);
     }
 

@@ -19,7 +19,7 @@ _Demonstração completa de expertise em arquitetura moderna, segurança avança
 
 ## 🎯 **Por Que Esta API é Diferente?**
 
-Esta **não é apenas mais uma API PHP**. É uma **demonstração completa de domínio técnico** que coloca você no **top 5% dos desenvolvedores PHP** do mercado.
+Esta **não é apenas mais uma API PHP**. É uma **demonstração completa de domínio técnico**
 
 ### 🔥 **Diferenciais Únicos:**
 

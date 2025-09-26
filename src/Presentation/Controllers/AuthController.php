@@ -7,7 +7,7 @@ namespace App\Presentation\Controllers;
 use App\Application\Services\AuthService;
 use App\Domain\Exceptions\DomainException;
 use App\Domain\Exceptions\ValidationException;
-use App\Infrastructure\Cache\CacheManager;
+use App\Infrastructure\Cache\CacheFactory;
 use App\Infrastructure\Security\JwtManager;
 use App\Infrastructure\Persistence\InMemoryUserRepository;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -23,8 +23,8 @@ final class AuthController
         // In a real application, these would be injected via DI container
         $userRepository = new InMemoryUserRepository();
         $jwtManager = new JwtManager();
-        $cacheManager = new CacheManager();
-
+        $cacheManager = CacheFactory::create();
+        
         $this->authService = new AuthService($userRepository, $jwtManager, $cacheManager);
     }
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http\Middleware;
 
-use App\Infrastructure\Cache\CacheManager;
+use App\Infrastructure\Cache\CacheFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -16,9 +16,12 @@ final class RateLimitMiddleware implements MiddlewareInterface
     private const DEFAULT_REQUESTS = 100;
     private const DEFAULT_WINDOW = 3600; // 1 hour
 
-    public function __construct(
-        private readonly CacheManager $cache
-    ) {}
+    private $cache;
+
+    public function __construct()
+    {
+        $this->cache = CacheFactory::create();
+    }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

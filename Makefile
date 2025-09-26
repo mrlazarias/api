@@ -21,6 +21,9 @@ build: ## Build the containers
 build-simple: ## Build with simplified Containerfile (if main build fails)
 	podman build -f Containerfile.simple -t robust-api:dev --target development .
 
+build-minimal: ## Build without Redis (maximum compatibility)
+	podman build -f Containerfile.simple -t robust-api-minimal:latest --target production .
+
 build-no-cache: ## Build containers without cache
 	podman-compose build --no-cache
 

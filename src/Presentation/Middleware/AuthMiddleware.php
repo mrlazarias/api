@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Presentation\Middleware;
 
 use App\Application\Services\AuthService;
-use App\Infrastructure\Cache\CacheManager;
+use App\Infrastructure\Cache\CacheFactory;
 use App\Infrastructure\Persistence\InMemoryUserRepository;
 use App\Infrastructure\Security\JwtManager;
 use Psr\Http\Message\ResponseInterface;
@@ -23,8 +23,8 @@ final class AuthMiddleware implements MiddlewareInterface
         // In a real application, these would be injected via DI container
         $userRepository = new InMemoryUserRepository();
         $jwtManager = new JwtManager();
-        $cacheManager = new CacheManager();
-
+        $cacheManager = CacheFactory::create();
+        
         $this->authService = new AuthService($userRepository, $jwtManager, $cacheManager);
     }
 

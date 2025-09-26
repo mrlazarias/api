@@ -285,7 +285,6 @@ make test-coverage   # > 90% coverage
 
 ---
 
-## 🌟 **Por Que Esta API Destaca Seu Portfólio?**
 
 ### 🎯 **Para Recrutadores Técnicos:**
 
@@ -381,26 +380,12 @@ MIT License - Use em projetos comerciais sem restrições.
 <div align="center">
 
 **Murilo Azarias**
-_Senior Backend Engineer_
+_Backend Engineer_
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/muriloazarias)
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github)](https://github.com/muriloazarias)
-[![Email](https://img.shields.io/badge/Email-Contact-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:murilo@example.com)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github)](https://github.com/mrlazarias)
+[![Email](https://img.shields.io/badge/Email-Contact-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:muriloazarias97@gmail.com)
 
 _"Code is poetry, architecture is symphony"_
-
-</div>
-
----
-
-<div align="center">
-
-## ⭐ **Se este projeto te impressionou, deixe uma estrela!**
-
-**Esta API demonstra o nível de excelência técnica que você busca em sua equipe.**
-
-[![Stars](https://img.shields.io/github/stars/seu-usuario/robust-php-api?style=social)](https://github.com/seu-usuario/robust-php-api/stargazers)
-[![Forks](https://img.shields.io/github/forks/seu-usuario/robust-php-api?style=social)](https://github.com/seu-usuario/robust-php-api/network/members)
-[![Watchers](https://img.shields.io/github/watchers/seu-usuario/robust-php-api?style=social)](https://github.com/seu-usuario/robust-php-api/watchers)
 
 </div>
